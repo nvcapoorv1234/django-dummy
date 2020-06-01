@@ -61,7 +61,7 @@ def loan(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    if not Loa.objects.filter(user_name=username,visit_time=current_time).exists():
+    if not LoanActivity.objects.filter(user_name=username,visit_time=current_time).exists():
         LoanChecked=LoanActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
     return render(request,'dummy/loan.html')
 
