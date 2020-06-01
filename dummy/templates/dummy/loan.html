@@ -1,0 +1,12 @@
+{% extends 'dummy/base_layout.html' %}
+{% block content %}
+<html>
+    
+    <body>
+        <h1>
+            Hi {{request.user.username}}
+        </h1>
+        <h2> Your account balance is 10,000. You can take loan upto 1,00,000.</h2>
+    </body>
+</html>
+{% endblock %}

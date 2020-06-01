@@ -1,0 +1,31 @@
+{% extends 'dummy/base_layout.html' %}
+{% block content %}
+<html>
+    <h1>
+        User is signed in. Name of the user is {{request.user.username}}
+    </h1>
+
+    <ul>
+        <li>
+            <form class="btn btn-success" action="{% url 'dummy:balance' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Account Balance View</button>
+            </form>
+        </li>
+        <br>
+        <li>
+            <form class="btn btn-success" action="{% url 'dummy:funds' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Fund transfer</button>
+            </form>
+        </li>
+        <br>
+        <li>
+            <form class="btn btn-success" action="{% url 'dummy:loan' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Loan facility</button>
+            </form>
+        </li>
+    </ul>
+</html>
+{% endblock %}
