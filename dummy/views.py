@@ -26,6 +26,12 @@ def signup_view(request):
 
 @login_required(login_url="/dummy/login")
 def logged(request):
+    username=request.user.username
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    current_date = now.date()
+    if not LoggedIn.objects.filter(user_name=username,visit_time=current_time).exists():
+        logged = LoggedIn.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
     return render(request,'dummy/logged.html')
 
 
@@ -35,7 +41,8 @@ def balance(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    balanceChecked= BalanceActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    if not BalanceActivity.objects.filter(user_name=username,visit_time=current_time).exists():
+        balanceChecked= BalanceActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
     return render(request,'dummy/balance.html')
 
 @login_required(login_url="/dummy/login")
@@ -44,7 +51,8 @@ def funds(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    FundsChecked= FundsActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    if not FundsActivity.objects.filter(user_name=username,visit_time=current_time).exists():
+        FundsChecked= FundsActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
     return render(request,'dummy/funds.html')
 
 @login_required(login_url="/dummy/login")
@@ -53,7 +61,8 @@ def loan(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    LoanChecked=LoanActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    if not Loa.objects.filter(user_name=username,visit_time=current_time).exists():
+        LoanChecked=LoanActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
     return render(request,'dummy/loan.html')
 
 
@@ -67,6 +76,10 @@ def login_view(request):
             return redirect('dummy:logged')
     else:
         form = AuthenticationForm()
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        current_date = now.date()
+        Create_visit=LoginActivity.objects.create(visit_date=current_date,visit_time=current_time)
     return render(request, 'dummy/login.html', { 'form': form })
 
 
@@ -89,5 +102,78 @@ def index(request):
     print(arrY)
     
     return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+
+
+def indexLogin(request):
+  
+    count=LoginActivity.objects.filter().count()
+    p=LoginActivity.objects.values('visit_date').annotate(dcount=Count('visit_date'))
+    arrX=p.values_list('visit_date',flat=True)
+    arrY=p.values_list('dcount',flat=True)
+    arrX=list(arrX)
+    arrX= [i.strftime("%m/%d/%y") for i in arrX]
+    arrY=list(arrY)
+    print(arrX)
+    print(arrY)
+    
+    return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+
+def indexLogged(request):
+    count=LoggedIn.objects.filter().count()
+    p=LoggedIn.objects.values('visit_date').annotate(dcount=Count('visit_date'))
+    arrX=p.values_list('visit_date',flat=True)
+    arrY=p.values_list('dcount',flat=True)
+    arrX=list(arrX)
+    arrX= [i.strftime("%m/%d/%y") for i in arrX]
+    arrY=list(arrY)
+    print(arrX)
+    print(arrY)
+    
+    return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+
+def indexBalance(request):
+    count=BalanceActivity.objects.filter().count()
+    p=BalanceActivity.objects.values('visit_date').annotate(dcount=Count('visit_date'))
+    arrX=p.values_list('visit_date',flat=True)
+    arrY=p.values_list('dcount',flat=True)
+    arrX=list(arrX)
+    arrX= [i.strftime("%m/%d/%y") for i in arrX]
+    arrY=list(arrY)
+    print(arrX)
+    print(arrY)
+    
+    return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+
+def indexLoans(request):
+    count=LoanActivity.objects.filter().count()
+    p=LoanActivity.objects.values('visit_date').annotate(dcount=Count('visit_date'))
+    arrX=p.values_list('visit_date',flat=True)
+    arrY=p.values_list('dcount',flat=True)
+    arrX=list(arrX)
+    arrX= [i.strftime("%m/%d/%y") for i in arrX]
+    arrY=list(arrY)
+    print(arrX)
+    print(arrY)
+    
+    return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+def indexFunds(request):
+    count=FundsActivity.objects.filter().count()
+    p=FundsActivity.objects.values('visit_date').annotate(dcount=Count('visit_date'))
+    arrX=p.values_list('visit_date',flat=True)
+    arrY=p.values_list('dcount',flat=True)
+    arrX=list(arrX)
+    arrX= [i.strftime("%m/%d/%y") for i in arrX]
+    arrY=list(arrY)
+    print(arrX)
+    print(arrY)
+    
+    return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
+
+
 
     
