@@ -24,15 +24,30 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'dummy/signup.html', { 'form': form })
 
+class Logged(object):
+    loggedi = -2
+
 @login_required(login_url="/dummy/login")
 def logged(request):
     username=request.user.username
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    if not LoggedIn.objects.filter(user_name=username,visit_time=current_time).exists():
+    if Logged.loggedi < 0:
         logged = LoggedIn.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    Logged.loggedi = 1
     return render(request,'dummy/logged.html')
+
+
+class Balance(object):
+    balance = -2
+
+class Funds(object):
+    funds = -2
+
+class Loans(object):
+    loans = -2
+
 
 
 @login_required(login_url="/dummy/login")
@@ -41,8 +56,9 @@ def balance(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    if not BalanceActivity.objects.filter(user_name=username,visit_time=current_time).exists():
+    if Balance.balance < 0:
         balanceChecked= BalanceActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    Balance.balance = 1
     return render(request,'dummy/balance.html')
 
 @login_required(login_url="/dummy/login")
@@ -51,8 +67,9 @@ def funds(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    if not FundsActivity.objects.filter(user_name=username,visit_time=current_time).exists():
+    if Funds.funds < 0:
         FundsChecked= FundsActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    Funds.funds = 1
     return render(request,'dummy/funds.html')
 
 @login_required(login_url="/dummy/login")
@@ -61,8 +78,9 @@ def loan(request):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     current_date = now.date()
-    if not LoanActivity.objects.filter(user_name=username,visit_time=current_time).exists():
+    if Loans.loans < 0:
         LoanChecked=LoanActivity.objects.create(user_name=username,visit_date=current_date,visit_time=current_time)
+    Loans.loans = 1
     return render(request,'dummy/loan.html')
 
 
@@ -86,6 +104,10 @@ def login_view(request):
 def logout_view(request):
     if request.method == 'POST':
             logout(request)
+            Balance.balance = -2
+            Loans.loans = -2
+            Funds.funds = -2
+            Logged.loggedi = -2
             return redirect('dummy:logged')
 
 
