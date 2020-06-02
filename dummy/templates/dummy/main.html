@@ -1,0 +1,36 @@
+
+<head>
+    <style>
+                body {
+          background-image: url('data:image/jpeg;base64,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');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+          
+        }
+    </style>
+</head>
+
+<h3>WELCOME TO DUMMY MONITOR</h3>
+<form class="form-group" action="{% url 'dummy:mainFunction2' %}" method="post">
+    {% csrf_token %}
+    <table border="1"><tr>
+    <td><label>
+        WHICH FUNCTIONALITY DO YOU WANT TO ENTER?
+    </label></td>
+    <td>
+    <select id="functions" name="functions">
+        <option value="balance">Balance</option>
+        <option value="loans">Loans</option>
+        <option value="funds">Funds</option>
+    </select></td>
+</tr>
+<tr><td>
+    <label for="birthday">Start date:</label></td>
+    <td><input type="date" id="start_date" name="start_date"></td></tr>
+    <tr><td><label for="birthday">End date:</label></td><td>
+    <input type="date" id="end_date" name="end_date"></tr>
+    
+</table>
+<input type="submit" class="btn btn-success">
+</form>

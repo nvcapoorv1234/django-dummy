@@ -196,6 +196,27 @@ def indexFunds(request):
     
     return render(request, "index.html",{"count":count,'arrX':arrX,'arrY':arrY})
 
+def mainFunction(request):
+    return render(request,"dummy/main.html")
+
+def mainFunction2(request):
+    res = request.POST.get('functions')
+    start_date = request.POST.get('start_date')
+    end_date = request.POST.get('end_date')
+    print(start_date)
+    print(0)
+    if res == 'balance':
+        count=BalanceActivity.objects.filter(visit_date__range=[start_date, end_date]).count()
+        flag=0
+    elif res == 'funds':
+        count=FundsActivity.objects.filter(visit_date__range=[start_date, end_date]).count()
+        flag=1
+    elif res == 'loans':
+        count=LoanActivity.objects.filter(visit_date__range=[start_date, end_date]).count()
+        flag=2
+    else:
+        count=0
+        flag=3
+    return render(request,"dummy/main2.html",{"count":count,"flag":flag})
 
 
-    

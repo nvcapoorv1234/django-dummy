@@ -20,5 +20,7 @@ urlpatterns = [
     path('monitorFunds',views.indexFunds,name="monitorFunds"),
     path('monitorBalance',views.indexBalance,name="monitorBalance"),
     path('monitorLoans',views.indexLoans,name="monitorLoans"),
+    path('mainFunction',views.mainFunction,name="mainFunction"),
+    path('mainFunction2',views.mainFunction2,name="mainFunction2"),
     
 ]
