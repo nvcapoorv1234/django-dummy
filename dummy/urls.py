@@ -10,6 +10,7 @@ urlpatterns = [
     path('login', views.login_view, name = "login"),
     path('dummy/login', views.login_view, name = "login"),
     path('logout', views.logout_view, name = "logout"),
+    path('dummy/out', views.out_view, name = "out"),
     path('balance', views.balance, name = "balance"),
     path('funds', views.funds, name = "funds"),
     path('loan', views.loan, name = "loan"),

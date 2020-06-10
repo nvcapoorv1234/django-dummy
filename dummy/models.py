@@ -32,3 +32,7 @@ class LoggedIn(models.Model):
     visit_date=models.DateField((u"Conversation Date"), blank=True)
     visit_time=models.TimeField((u"Conversation Time"), blank=True)
 
+
+class SessionMange(models.Model):
+    s_id=models.CharField(max_length=100,null=True)
+
